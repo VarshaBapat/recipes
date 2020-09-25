@@ -1,0 +1,49 @@
+1. To define a class:
+   class Noop; end
+
+2. To define a instance method
+   class Noop
+     def instance_method; end
+   end
+
+3. To define a class method
+   class Noop
+     def self.class_method; end
+   end
+
+---
+self
+
+1. Every line in Ruby code executes in a context/scope
+2. That context is an object
+3. It's always available as `self`
+4. `self` is an instance method defined on Object
+
+---
+Defining Methods
+
+1. An object hosts methods and @variables
+2. Methods can only be defined on an object
+3. The object to host a method can be specified explicitly at declaration,
+   or Ruby will use `self` at runtime
+
+---
+Calling (Invoking) Methods
+
+1. Methods are invoked on an object
+2. The object can be specified explicitly or implicitly
+3. If implicitly, Ruby will use the object pointed to by `self` 
+
+---
+Steps in Object Creation (e.g. Recipe.new)
+
+1. Allocates memory, creates the object, does 'plumbing'
+2. Assigns `self` to that new object
+3. Attaches to `self` (that is, the new object) the methods in the class
+   that haven't been explicitly declared on an object 
+4. Invokes the instance method `initialize` on the new object
+
+---
+1. EVERYTHING in Ruby is an Object
+2. Objects are classes
+3. Therefore classes are objects
