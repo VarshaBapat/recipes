@@ -32,6 +32,9 @@ class Assembly
     ASSEMBLIES << self
   end
 
+  def update!
+  end
+
   def delete
     idx = ASSEMBLIES.index { |assembly| assembly.id == @id }
 

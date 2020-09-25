@@ -31,10 +31,9 @@ class RecipesController
   def edit(id)
     recipe = Recipe.find(id)
     super recipe: recipe
+    recipe.update!
   rescue => e
     puts e
-  ensure
-    show recipe.id
   end
 
   def destroy(id)
