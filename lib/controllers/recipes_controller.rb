@@ -3,8 +3,9 @@ require_relative '../views/recipes/index'
 require_relative '../views/recipes/show'
 require_relative '../views/recipes/new'
 require_relative '../views/recipes/edit'
+require_relative '../views/recipes/destroy'
 
-module RecipesController
+class RecipesController
   def index
     recipe = Recipe.all
     ::Views::Recipes.index recipes: recipe
@@ -27,6 +28,7 @@ module RecipesController
   def edit(id)
     recipe = Recipe.find(id)
     ::Views::Recipes.new recipe: recipe
+    show recipe.id
   rescue => e
     puts e
   end
@@ -36,7 +38,6 @@ module RecipesController
     return unless recipe
 
     recipe.delete
+    ::Views::Recipes.destroy id: id
   end
-
-  module_function :index, :show, :new, :destroy, :edit
 end

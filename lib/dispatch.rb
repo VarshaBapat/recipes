@@ -1,16 +1,18 @@
 require_relative 'controllers/recipes_controller.rb'
 
 def dispatch(cmd, params = nil)
+  controller = RecipesController.new
+
   case cmd
   when 'list'
-    ::RecipesController.index
+    controller.index
   when 'show'
-    ::RecipesController.show params
+    controller.show params
   when 'new'
-    ::RecipesController.new
+    controller.new
   when 'edit'
-    ::RecipesController.edit params
+    controller.edit params
   when 'delete'
-    ::RecipesController.destroy params
+    controller.destroy params
   end
 end

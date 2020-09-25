@@ -12,8 +12,8 @@ require_relative 'dispatch'
 # 8. Go back to step 1
 
 begin
-    print 'Enter your command (list, show, new, edit, delete, quit): '
-    input = gets.chomp.downcase.strip.split(' ')
-    command, params = input
-    dispatch command, params
+  print 'Enter your command (list, show, new, edit, delete, quit): '
+  input = gets.chomp.downcase.strip.split(' ')
+  command, params = input
+  dispatch command, params
 end until ['quit', 'q'].include? command
