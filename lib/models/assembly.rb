@@ -1,4 +1,7 @@
 class Assembly
+  # Since a constant is a global across the entire application, all subclasses
+  # of assembly will use the same array. Consider refactoring this data
+  # structure to an class instance variable.
   ASSEMBLIES = []
 
   attr_reader :id, :errors, :difficulty
@@ -11,6 +14,9 @@ class Assembly
     @errors = {}
   end
 
+  # We want to coelesce difficulty to always be an integer; use attr_reader
+  # to be able to read difficulty, but write a custom setter method so that
+  # we have control over the assignment to the @difficulty instance variable.
   def difficulty=(difficulty)
     @difficulty = difficulty.to_i
   end
@@ -20,17 +26,22 @@ class Assembly
   end
 
   def save!
-    raise "RecordNotSaved: #{errors.values}" unless valid?
+    raise 'RecordNotSaved' unless valid?
 
     @id = ASSEMBLIES.length + 1
     ASSEMBLIES << self
   end
 
   def delete
-    idx = ASSEMBLIES.index { |assembly| assembly[:id] == @id }
+    idx = ASSEMBLIES.index { |assembly| assembly.id == @id }
+
+    # Set the assembly to nil in the ASSEMBLIES array, effectively deleting
+    # it. Also set @id to nil to flag that this assembly instance is no
+    # longer persisted.
     @id = ASSEMBLIES[idx] = nil
-    # TODO: Ids may be reused if we compact the array. Think up another way
-    # to generate ids that will always be unique.
+
+    # Ids may be reused if we compact the array. Think up another way to
+    # generate unique ids as well as be able to compact the array.
     # ASSEMBLIES.compact!
   end
 
@@ -41,12 +52,17 @@ class Assembly
     ].join("\n")
   end
 
+  # Encapsulate access to all assembles; but since we're leaking out the
+  # array, it's possible that it gets mutated behind our back...
   def self.all
     ASSEMBLIES
   end
 
   def self.find(id)
     id = id.to_i
-    ASSEMBLIES.find { |assembly| assembly[:id] == id }
+    assembly = ASSEMBLIES.find { |a| a.id == id }
+    raise 'RecordNotFound' unless assembly
+
+    assembly
   end
 end

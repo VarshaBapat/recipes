@@ -2,6 +2,7 @@ require_relative '../models/recipe'
 require_relative '../views/recipes/index'
 require_relative '../views/recipes/show'
 require_relative '../views/recipes/new'
+require_relative '../views/recipes/edit'
 
 module RecipesController
   def index
@@ -10,7 +11,7 @@ module RecipesController
   end
 
   def show(id)
-    recipe = Recipe.find(id)
+    recipe = Recipe.find(id) rescue nil
     ::Views::Recipes.show recipe: recipe
   end
 
@@ -18,12 +19,24 @@ module RecipesController
     recipe = Recipe.new
     ::Views::Recipes.new recipe: recipe
     recipe.save!
+    show recipe.id
+  rescue => e
+    puts e
+  end
+
+  def edit(id)
+    recipe = Recipe.find(id)
+    ::Views::Recipes.new recipe: recipe
+    recipe.save!
   rescue => e
     puts e
   end
 
   def destroy(id)
-    Recipe.delete(id)
+    recipe = Recipe.find(id) rescue nil
+    return unless recipe
+
+    recipe.delete
   end
 
   module_function :index, :show, :new, :destroy

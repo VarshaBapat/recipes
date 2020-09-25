@@ -9,7 +9,7 @@ def dispatch(cmd, params = nil)
   when 'new'
     ::RecipesController.new
   when 'edit'
-    puts 'edit'
+    ::RecipesController.edit params
   when 'delete'
     ::RecipesController.destroy params
   end

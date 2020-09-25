@@ -5,10 +5,10 @@ class Recipe < Assembly
   DIFFICULTY_ERROR_MESSAGE = \
     "Difficulty must be between #{DIFFICULTY_RANGE.first} and #{DIFFICULTY_RANGE.last}"
 
-  # Override the default implmentation of `difficulty=` provided by Assembly (the parent
-  # class). The default implementation is provided by attr_accessor in Assembly. For
-  # the Recipe class, we want to ensure that #difficulty is always an integer so that
-  # we can then do a range validation (`DIFFICULTY_RANGE`).
+  # Override the default implmentation of `difficulty=` provided by Assembly
+  # (the parent class). The default implementation is provided by Assembly.
+  # For the Recipe class, we want to add a validation error for #difficulty
+  # if it is out of range.
   def difficulty=(difficulty)
     super
     if valid_difficulty?
@@ -19,7 +19,7 @@ class Recipe < Assembly
   end
 
   def valid_difficulty?
-    DIFFICULTY_RANGE.member? @difficulty
+    DIFFICULTY_RANGE === @difficulty
   end
 
   def valid?
