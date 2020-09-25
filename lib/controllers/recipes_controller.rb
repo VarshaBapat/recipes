@@ -27,7 +27,6 @@ module RecipesController
   def edit(id)
     recipe = Recipe.find(id)
     ::Views::Recipes.new recipe: recipe
-    recipe.save!
   rescue => e
     puts e
   end
@@ -39,5 +38,5 @@ module RecipesController
     recipe.delete
   end
 
-  module_function :index, :show, :new, :destroy
+  module_function :index, :show, :new, :destroy, :edit
 end
