@@ -6,31 +6,35 @@ require_relative '../views/recipes/edit'
 require_relative '../views/recipes/destroy'
 
 class RecipesController
+  include Views::Recipes
+
   def index
     recipe = Recipe.all
-    ::Views::Recipes.index recipes: recipe
+    super recipes: recipe
   end
 
   def show(id)
     recipe = Recipe.find(id) rescue nil
-    ::Views::Recipes.show recipe: recipe
+    super recipe: recipe
   end
 
   def new
     recipe = Recipe.new
-    ::Views::Recipes.new recipe: recipe
+    super recipe: recipe
     recipe.save!
-    show recipe.id
   rescue => e
     puts e
+  ensure
+    show recipe.id
   end
 
   def edit(id)
     recipe = Recipe.find(id)
-    ::Views::Recipes.new recipe: recipe
-    show recipe.id
+    super recipe: recipe
   rescue => e
     puts e
+  ensure
+    show recipe.id
   end
 
   def destroy(id)
@@ -38,6 +42,6 @@ class RecipesController
     return unless recipe
 
     recipe.delete
-    ::Views::Recipes.destroy id: id
+    super id: id
   end
 end

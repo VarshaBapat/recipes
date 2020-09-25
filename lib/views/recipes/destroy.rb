@@ -1,6 +1,6 @@
 module Views
   module Recipes
-    def self.destroy(id:)
+    def destroy(id:)
       puts "Recipe #{id} deleted"
     end
   end

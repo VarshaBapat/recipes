@@ -1,6 +1,6 @@
 module Views
   module Recipes
-    def self._form(recipe)
+    def _form(recipe)
       begin
         print 'Title'
         print " (#{recipe.title})" unless recipe.title.nil?
