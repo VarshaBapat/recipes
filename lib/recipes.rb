@@ -1,4 +1,5 @@
 require_relative 'dispatch'
+require_relative 'models/assembly'
 
 # 1. Show a prompt to the user with a list of options
 # 2. If the command == 'quit', then exit the program
@@ -10,6 +11,8 @@ require_relative 'dispatch'
 # 7. If `edit`, then: show a form prepopulated with the receipe, then
 #    update the existing recipe in the database
 # 8. Go back to step 1
+
+Assembly.init
 
 begin
     print 'Enter your command (list, show, new, edit, delete, quit): '

@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Assembly
   # Since a constant is a global across the entire application, all subclasses
   # of assembly will use the same array. Consider refactoring this data
@@ -30,6 +32,7 @@ class Assembly
 
     @id = ASSEMBLIES.length + 1
     ASSEMBLIES << self
+    File.open('assembly.yml', 'w') { |file| file.write(ASSEMBLIES.to_yaml) }
   end
 
   def delete
@@ -64,5 +67,9 @@ class Assembly
     raise 'RecordNotFound' unless assembly
 
     assembly
+  end
+
+  def self.init
+    ASSEMBLIES.push *YAML.load(File.read('assembly.yml'))
   end
 end
