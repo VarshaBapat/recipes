@@ -67,12 +67,18 @@ class Assembly
 
   def self.find(id)
     id = id.to_i
-    assembly = ASSEMBLIES.find { |a| a.id == id }
+
+    # Use `a&.id` which is a short-hand notation for `a && a.id`
+    assembly = ASSEMBLIES.find { |a| a&.id == id }
     raise RecordNotFound.new(id) unless assembly
 
     assembly
   end
 
+  # Load all the assemblies and push them into the existing ASSEMBLIES array.
+  # Use the splat operator since `Array#push` wants passed to it the elements
+  # to add one by one. The splat operator takes an array and passes its elements
+  # to a method as comma-separated arguments (that is, not as a single array).
   def self.init
     ASSEMBLIES.push *YAML.load(File.read('assembly.yml'))
   end

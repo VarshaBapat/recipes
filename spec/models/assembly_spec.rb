@@ -52,6 +52,12 @@ RSpec.describe Assembly do
             assembly = Assembly.new
             expect { assembly.save! }.to change(Assembly::ASSEMBLIES, :size).by(1)
         end
+
+        it 'should raise an error for invalid assemblies' do
+            assembly = Assembly.new
+            expect(assembly).to receive(:valid?).and_return(false)
+            expect { assembly.save! }.to raise_error
+        end
     end
 
     describe 'delete' do
@@ -65,6 +71,19 @@ RSpec.describe Assembly do
         it 'should ignore unsaved assemblies' do
             assembly = Assembly.new
             expect(assembly.delete).to be_nil
+        end
+    end
+
+    describe '::find' do
+        it 'should find the assembly' do
+            expected_assembly = Assembly.new
+            expected_assembly.save!
+            assembly = Assembly.find expected_assembly.id
+            expect(assembly).to be expected_assembly
+        end
+
+        it 'should raise an error if assembly not found' do
+            expect{ Assembly.find(-1) }.to raise_error Assembly::RecordNotFound
         end
     end
 end
