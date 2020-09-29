@@ -7,6 +7,11 @@ RSpec.describe Assembly do
             expect(assembly).to respond_to :id
         end
 
+        # When the class itself is in the `describe` method, RSpec's one-liner
+        # syntax can be used. See:
+        # https://relishapp.com/rspec/rspec-core/v/3-9/docs/subject/one-liner-syntax
+        it { is_expected.to respond_to :id }
+
         it 'should respond to materials' do
             expect(assembly).to respond_to :materials
         end
