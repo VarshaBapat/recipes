@@ -26,6 +26,9 @@ RSpec.describe 'recipes/new' do
         let(:recipe) { Recipe.new title: valid_title, difficulty: valid_difficulty }
 
         before(:each) do
+            # For the gets in the view, return an empty string for the
+            # prompts for both title and difficulty so that the default value
+            # will be used.
             allow(view).to receive(:gets).and_return('', '')
         end
 
