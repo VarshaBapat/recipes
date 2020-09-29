@@ -2,6 +2,7 @@ require 'yaml'
 
 class Assembly
   class RecordNotFound < StandardError; end
+  class RecordNotSaved < StandardError; end
 
   # Since a constant is a global across the entire application, all subclasses
   # of assembly will use the same array. Consider refactoring this data
@@ -30,7 +31,7 @@ class Assembly
   end
 
   def save!
-    raise 'RecordNotSaved' unless valid?
+    raise RecordNotSaved.new unless valid?
 
     @id = ASSEMBLIES.length + 1
     ASSEMBLIES << self
