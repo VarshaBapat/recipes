@@ -6,7 +6,8 @@ module Views
         print " (#{recipe.title})" unless recipe.title.nil?
         print ': '
         input = gets.chomp.strip
-        recipe.title = !input.empty? ? input : recipe.title
+        # recipe.title = !input.empty? ? input : recipe.title
+        recipe.title = input.empty? ? recipe.title : input
 
         print 'Level of Difficulty (1-5)'
         print " (#{recipe.difficulty})" unless recipe.difficulty.nil?

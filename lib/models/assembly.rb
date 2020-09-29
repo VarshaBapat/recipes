@@ -1,12 +1,14 @@
 require 'yaml'
 
 class Assembly
+  class RecordNotFound < StandardError; end
+
   # Since a constant is a global across the entire application, all subclasses
   # of assembly will use the same array. Consider refactoring this data
   # structure to an class instance variable.
   ASSEMBLIES = []
 
-  attr_reader :id, :errors, :difficulty
+  attr_reader :id, :errors, :difficulty, :materials
   attr_accessor :title
 
   def initialize(title: nil, difficulty: nil)
@@ -36,6 +38,8 @@ class Assembly
   end
 
   def delete
+    return if @id.nil?
+
     idx = ASSEMBLIES.index { |assembly| assembly.id == @id }
 
     # Set the assembly to nil in the ASSEMBLIES array, effectively deleting
@@ -64,7 +68,7 @@ class Assembly
   def self.find(id)
     id = id.to_i
     assembly = ASSEMBLIES.find { |a| a.id == id }
-    raise 'RecordNotFound' unless assembly
+    raise RecordNotFound.new(id) unless assembly
 
     assembly
   end
