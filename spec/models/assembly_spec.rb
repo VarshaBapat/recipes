@@ -56,7 +56,7 @@ RSpec.describe Assembly do
         it 'should raise an error for invalid assemblies' do
             assembly = Assembly.new
             expect(assembly).to receive(:valid?).and_return(false)
-            expect { assembly.save! }.to raise_error
+            expect { assembly.save! }.to raise_error RuntimeError
         end
     end
 

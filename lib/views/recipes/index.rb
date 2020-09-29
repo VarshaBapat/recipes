@@ -15,7 +15,7 @@ module Views
       table = TTY::Table.new headers, rows
 
       puts 'Recipes!'
-      puts table.render :ascii
+      puts table.render(:ascii).to_s
     end
 
     def self.table_rows_for(recipes)
