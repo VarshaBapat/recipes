@@ -34,10 +34,12 @@ RSpec.describe 'recipes/new' do
 
         it "should use the recipe's existing title" do
             expect{ view.new recipe: recipe }.to output(/Title \(#{valid_title}\)/).to_stdout
+            expect(recipe.title).to eq valid_title
         end
 
         it "should use the recipe's existing difficulty" do
             expect{ view.new recipe: recipe }.to output(/\(#{valid_difficulty}\)/).to_stdout
+            expect(recipe.difficulty).to eq valid_difficulty
         end
     end
 end
